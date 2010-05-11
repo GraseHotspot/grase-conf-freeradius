@@ -1,0 +1,31 @@
+#!/bin/bash
+# postrm script for grase-conf-freeradius
+
+set -e
+#set -u
+
+if [ -f /usr/share/debconf/confmodule ]; then
+    . /usr/share/debconf/confmodule
+fi
+if [ -f /usr/share/dbconfig-common/dpkg/postrm.mysql ]; then
+    . /usr/share/dbconfig-common/dpkg/postrm.mysql
+    dbc_go grase-conf-freeradius $@
+fi
+
+
+#if [ "$1" = "purge" ]; then
+
+
+#fi
+
+#DEBHELPER#
+
+
+
+if which invoke-rc.d >/dev/null 2>&1; then
+       invoke-rc.d freeradius stop || true
+else
+       /etc/init.d/freeradius stop || true
+fi
+
+exit 0

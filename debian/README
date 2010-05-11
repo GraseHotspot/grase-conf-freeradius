@@ -1,0 +1,7 @@
+The Debian Package grase-conf-freeeradius
+----------------------------
+
+This package installs the glue between freeradius and mysql and sets it up to 
+run the hotspot software.
+
+ -- Tim White <tim@hotspot.purewhite.id.au>  Tue, 04 May 2010 21:49:42 +0800 

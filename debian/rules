@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+DEB_AUTO_UPDATE_DEBIAN_CONTROL = 1
+
+DEB_DIVERT_EXTENSION = .grase
+# Replace some base files with simple replacements.
+DEB_DIVERT_FILES_grase-conf-freeradius += \
+	/etc/freeradius/sql.conf.grase \
+	/etc/freeradius/sites-available/default.grase \
+	/etc/freeradius/dictionary.grase \
+	/etc/freeradius/sql/mysql/counter.conf.grase 
+#	/etc/mailname.debathena \
+#	/etc/papersize.debathena
+#DEB_TRANSFORM_FILES_grase-conf-freeradius += \
+#	/etc/freeradius/clients.conf.grase
+#	/etc/default/monit.grase \
+#	/etc/monit/monitrc.grase
+
+# These files are installed via dh_install from the files/ directory
+# (see debian/grase-conf-freeradius.install)
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/rules/config-package.mk
+

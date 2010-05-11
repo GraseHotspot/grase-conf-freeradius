@@ -1,0 +1,6 @@
+#!/usr/bin/perl -0p
+# perl -0p is useful for writing efficient transform scripts.
+
+# Set freeradius to use sql
+
+s/testing123/hotspotradius/m or die;

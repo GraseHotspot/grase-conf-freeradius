@@ -1,0 +1,13 @@
+Source: grase-conf-freeradius
+Section: unknown
+Priority: extra
+Maintainer: unknown <tim@unknown>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Homepage: <insert the upstream URL, if relevant>
+
+Package: grase-conf-freeradius
+Architecture: all
+Depends: ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

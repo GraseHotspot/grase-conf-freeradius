@@ -1,0 +1,209 @@
+-- Create RADIUS DB
+# CREATE DATABASE IF NOT EXISTS radius;
+# GRANT ALL ON radius.* TO 'radmin'@'localhost'  IDENTIFIED BY 'radminwebaccess';
+
+
+-- Create Radius user and pass
+-- CREATE USER 'radius'@'localhost';
+-- SET PASSWORD FOR 'radius'@'localhost' = PASSWORD('radpass');
+
+-- The server can read any table in SQL
+# GRANT SELECT ON radius.* TO 'radius'@'localhost' IDENTIFIED BY 'radpass';
+
+-- The server can write to the accounting and post-auth logging table.
+# GRANT ALL on radius.radacct TO 'radius'@'localhost'  IDENTIFIED BY 'radpass';
+# GRANT ALL on radius.radpostauth TO 'radius'@'localhost'  IDENTIFIED BY 'radpass';
+
+# USE radius;
+--
+-- Table structure for table `mtotacct`
+--
+
+# DROP TABLE IF EXISTS `mtotacct`;
+CREATE TABLE IF NOT EXISTS `mtotacct` (
+  `MTotAcctId` bigint(21) NOT NULL auto_increment,
+  `UserName` varchar(64) NOT NULL default '',
+  `AcctDate` date NOT NULL default '0000-00-00',
+  `ConnNum` bigint(12) default NULL,
+  `ConnTotDuration` bigint(12) default NULL,
+  `ConnMaxDuration` bigint(12) default NULL,
+  `ConnMinDuration` bigint(12) default NULL,
+  `InputOctets` bigint(12) default NULL,
+  `OutputOctets` bigint(12) default NULL,
+  `NASIPAddress` varchar(15) default NULL,
+  PRIMARY KEY  (`MTotAcctId`),
+  KEY `UserName` (`UserName`),
+  KEY `AcctDate` (`AcctDate`),
+  KEY `UserOnDate` (`UserName`,`AcctDate`),
+  KEY `NASIPAddress` (`NASIPAddress`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `mtotaccttmp`
+--
+
+# DROP TABLE IF EXISTS `mtotaccttmp`;
+CREATE TABLE IF NOT EXISTS `mtotaccttmp` (
+  `MTotAcctId` bigint(21) NOT NULL auto_increment,
+  `UserName` varchar(64) NOT NULL default '',
+  `AcctDate` date NOT NULL default '0000-00-00',
+  `ConnNum` bigint(12) default NULL,
+  `ConnTotDuration` bigint(12) default NULL,
+  `ConnMaxDuration` bigint(12) default NULL,
+  `ConnMinDuration` bigint(12) default NULL,
+  `InputOctets` bigint(12) default NULL,
+  `OutputOctets` bigint(12) default NULL,
+  `NASIPAddress` varchar(15) default NULL,
+  PRIMARY KEY  (`MTotAcctId`),
+  KEY `UserName` (`UserName`),
+  KEY `AcctDate` (`AcctDate`),
+  KEY `UserOnDate` (`UserName`,`AcctDate`),
+  KEY `NASIPAddress` (`NASIPAddress`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `nas`
+--
+
+# DROP TABLE IF EXISTS `nas`;
+CREATE TABLE IF NOT EXISTS `nas` (
+  `id` int(10) NOT NULL auto_increment,
+  `nasname` varchar(128) NOT NULL,
+  `shortname` varchar(32) default NULL,
+  `type` varchar(30) default 'other',
+  `ports` int(5) default NULL,
+  `secret` varchar(60) NOT NULL default 'secret',
+  `community` varchar(50) default NULL,
+  `description` varchar(200) default 'RADIUS Client',
+  PRIMARY KEY  (`id`),
+  KEY `nasname` (`nasname`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radacct`
+--
+
+# DROP TABLE IF EXISTS `radacct`;
+CREATE TABLE IF NOT EXISTS `radacct` (
+  `RadAcctId` bigint(21) NOT NULL auto_increment,
+  `AcctSessionId` varchar(32) NOT NULL default '',
+  `AcctUniqueId` varchar(32) default NULL,
+  `UserName` varchar(64) NOT NULL default '',
+  `Realm` varchar(64) default '',
+  `NASIPAddress` varchar(15) NOT NULL default '',
+  `NASPortId` varchar(15) default NULL,
+  `NASPortType` varchar(32) default NULL,
+  `AcctStartTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `AcctStopTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `AcctSessionTime` int(12) default NULL,
+  `AcctAuthentic` varchar(32) default NULL,
+  `ConnectInfo_start` varchar(50) default NULL,
+  `ConnectInfo_stop` varchar(50) default NULL,
+  `AcctInputOctets` bigint(12) default NULL,
+  `AcctOutputOctets` bigint(12) default NULL,
+  `CalledStationId` varchar(50) NOT NULL default '',
+  `CallingStationId` varchar(50) NOT NULL default '',
+  `AcctTerminateCause` varchar(32) NOT NULL default '',
+  `ServiceType` varchar(32) default NULL,
+  `FramedProtocol` varchar(32) default NULL,
+  `FramedIPAddress` varchar(15) NOT NULL default '',
+  `AcctStartDelay` int(12) default NULL,
+  `AcctStopDelay` int(12) default NULL,
+  PRIMARY KEY  (`RadAcctId`),
+  UNIQUE KEY `AcctUniqueId_2` (`AcctUniqueId`),
+  KEY `UserName` (`UserName`),
+  KEY `FramedIPAddress` (`FramedIPAddress`),
+  KEY `AcctSessionId` (`AcctSessionId`),
+  KEY `AcctUniqueId` (`AcctUniqueId`),
+  KEY `AcctStartTime` (`AcctStartTime`),
+  KEY `AcctStopTime` (`AcctStopTime`),
+  KEY `NASIPAddress` (`NASIPAddress`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radcheck`
+--
+
+# DROP TABLE IF EXISTS `radcheck`;
+CREATE TABLE IF NOT EXISTS `radcheck` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `UserName` varchar(64) NOT NULL default '',
+  `Attribute` varchar(32) NOT NULL default '',
+  `op` char(2) NOT NULL default '==',
+  `Value` varchar(253) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `UserName` (`UserName`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radgroupcheck`
+--
+
+# DROP TABLE IF EXISTS `radgroupcheck`;
+CREATE TABLE IF NOT EXISTS `radgroupcheck` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `GroupName` varchar(64) NOT NULL default '',
+  `Attribute` varchar(32) NOT NULL default '',
+  `op` char(2) NOT NULL default '==',
+  `Value` varchar(253) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `GroupName` (`GroupName`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radgroupreply`
+--
+
+# DROP TABLE IF EXISTS `radgroupreply`;
+CREATE TABLE IF NOT EXISTS `radgroupreply` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `GroupName` varchar(64) NOT NULL default '',
+  `Attribute` varchar(32) NOT NULL default '',
+  `op` char(2) NOT NULL default '=',
+  `Value` varchar(253) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `GroupName` (`GroupName`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radpostauth`
+--
+
+# DROP TABLE IF EXISTS `radpostauth`;
+CREATE TABLE IF NOT EXISTS `radpostauth` (
+  `id` int(11) NOT NULL auto_increment,
+  `username` varchar(64) NOT NULL default '',
+  `pass` varchar(64) NOT NULL default '',
+  `reply` varchar(32) NOT NULL default '',
+  `authdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radreply`
+--
+
+# DROP TABLE IF EXISTS `radreply`;
+CREATE TABLE IF NOT EXISTS `radreply` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `UserName` varchar(64) NOT NULL default '',
+  `Attribute` varchar(32) NOT NULL default '',
+  `op` char(2) NOT NULL default '=',
+  `Value` varchar(253) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `UserName` (`UserName`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `usergroup`
+--
+
+# DROP TABLE IF EXISTS `usergroup`;
+CREATE TABLE IF NOT EXISTS `usergroup` (
+  `UserName` varchar(64) NOT NULL default '',
+  `GroupName` varchar(64) NOT NULL default '',
+  `priority` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`UserName`,`GroupName`),
+  KEY `UserName` (`UserName`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
