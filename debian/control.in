@@ -9,7 +9,7 @@ Homepage: http://hotspot.purewhite.id.au/
 Package: grase-conf-freeradius
 Architecture: all
 Pre-Depends: freeradius, freeradius-mysql, coova-chilli (>= 1.2.2grase1 )
-Depends: cdbs, ${misc:Depends}
+Depends: dbconfig-common, cdbs, ${misc:Depends}
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}
 Description: Config files for FreeRADIUS for the GRASE Hotspot System
