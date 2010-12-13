@@ -1,4 +1,10 @@
-grase-conf-freeradius (1.0) unstable; urgency=low
+grase-conf-freeradius (1.1) purewhite; urgency=low
+
+  * Database upgrades
+
+ -- Tim White <tim@hotspot.purewhite.id.au>  Mon, 13 Dec 2010 14:14:16 +1000
+
+grase-conf-freeradius (1.0) purewhite; urgency=low
 
   [ Tim White ]
   * Initial Release.

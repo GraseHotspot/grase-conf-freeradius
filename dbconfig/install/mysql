@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `radacct` (
   `AcctSessionId` varchar(32) NOT NULL default '',
   `AcctUniqueId` varchar(32) default NULL,
   `UserName` varchar(64) NOT NULL default '',
+  `Groupname` varchar(64) NOT NULL default '',  
   `Realm` varchar(64) default '',
   `NASIPAddress` varchar(15) NOT NULL default '',
   `NASPortId` varchar(15) default NULL,
@@ -99,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `radacct` (
   `AcctAuthentic` varchar(32) default NULL,
   `ConnectInfo_start` varchar(50) default NULL,
   `ConnectInfo_stop` varchar(50) default NULL,
-  `AcctInputOctets` bigint(12) default NULL,
-  `AcctOutputOctets` bigint(12) default NULL,
+  `AcctInputOctets` bigint(20) default NULL,
+  `AcctOutputOctets` bigint(20) default NULL,
   `CalledStationId` varchar(50) NOT NULL default '',
   `CallingStationId` varchar(50) NOT NULL default '',
   `AcctTerminateCause` varchar(32) NOT NULL default '',
@@ -109,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `radacct` (
   `FramedIPAddress` varchar(15) NOT NULL default '',
   `AcctStartDelay` int(12) default NULL,
   `AcctStopDelay` int(12) default NULL,
+  `xascendsessionsvrkey` varchar(10) default NULL,  
   PRIMARY KEY  (`RadAcctId`),
   UNIQUE KEY `AcctUniqueId_2` (`AcctUniqueId`),
   KEY `UserName` (`UserName`),
@@ -128,11 +130,12 @@ CREATE TABLE IF NOT EXISTS `radacct` (
 CREATE TABLE IF NOT EXISTS `radcheck` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `UserName` varchar(64) NOT NULL default '',
-  `Attribute` varchar(32) NOT NULL default '',
+  `Attribute` varchar(64) NOT NULL default '',
   `op` char(2) NOT NULL default '==',
   `Value` varchar(253) NOT NULL default '',
   PRIMARY KEY  (`id`),
-  KEY `UserName` (`UserName`(32))
+  KEY `UserName` (`UserName`(32)),
+  UNIQUE KEY `userattribute` (`UserName`,`Attribute`,`op`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -143,11 +146,11 @@ CREATE TABLE IF NOT EXISTS `radcheck` (
 CREATE TABLE IF NOT EXISTS `radgroupcheck` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `GroupName` varchar(64) NOT NULL default '',
-  `Attribute` varchar(32) NOT NULL default '',
+  `Attribute` varchar(64) NOT NULL default '',
   `op` char(2) NOT NULL default '==',
   `Value` varchar(253) NOT NULL default '',
   PRIMARY KEY  (`id`),
-  KEY `GroupName` (`GroupName`(32))
+  UNIQUE KEY `GroupName` (`GroupName`(32))
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -158,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `radgroupcheck` (
 CREATE TABLE IF NOT EXISTS `radgroupreply` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `GroupName` varchar(64) NOT NULL default '',
-  `Attribute` varchar(32) NOT NULL default '',
+  `Attribute` varchar(64) NOT NULL default '',
   `op` char(2) NOT NULL default '=',
   `Value` varchar(253) NOT NULL default '',
   PRIMARY KEY  (`id`),
@@ -187,23 +190,39 @@ CREATE TABLE IF NOT EXISTS `radpostauth` (
 CREATE TABLE IF NOT EXISTS `radreply` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `UserName` varchar(64) NOT NULL default '',
-  `Attribute` varchar(32) NOT NULL default '',
+  `Attribute` varchar(64) NOT NULL default '',
   `op` char(2) NOT NULL default '=',
   `Value` varchar(253) NOT NULL default '',
   PRIMARY KEY  (`id`),
-  KEY `UserName` (`UserName`(32))
+  KEY `UserName` (`UserName`(32)),
+  UNIQUE KEY `userattribute` (`UserName`,`Attribute`,`op`)  
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `radusercomment`
+--
+
+# DROP TABLE IF EXISTS `radusercomment`;
+CREATE TABLE IF NOT EXISTS `radusercomment` (
+  `UserName` varchar(64) NOT NULL default '',
+  `Comment` varchar(256) NOT NULL default '',
+  PRIMARY KEY  (`UserName`),
+  KEY `UserName` (`UserName`(32)),
+  UNIQUE KEY `usercomment` (`UserName`,`Comment`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `radusergroup`
 --
 
-# DROP TABLE IF EXISTS `usergroup`;
+# DROP TABLE IF EXISTS `radusergroup`;
 CREATE TABLE IF NOT EXISTS `radusergroup` (
   `UserName` varchar(64) NOT NULL default '',
   `GroupName` varchar(64) NOT NULL default '',
   `priority` int(11) NOT NULL default '1',
   PRIMARY KEY  (`UserName`,`GroupName`),
-  KEY `UserName` (`UserName`(32))
+  KEY `UserName` (`UserName`(32)),
+  UNIQUE KEY `usergroup` (`UserName`,`priority`, `GroupName`),
+  UNIQUE KEY `usergrouppri` (`UserName`,`priority`)  
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
