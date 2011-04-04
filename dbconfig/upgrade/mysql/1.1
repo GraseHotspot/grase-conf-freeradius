@@ -2,6 +2,8 @@
 ALTER TABLE `radius`.`radacct`
  MODIFY COLUMN `AcctInputOctets` BIGINT(20)  DEFAULT NULL,
  MODIFY COLUMN `AcctOutputOctets` BIGINT(20)  DEFAULT NULL, 
+ MODIFY COLUMN `AcctStartTime` datetime NULL DEFAULT NULL,
+ MODIFY COLUMN `AcctStopTime` datetime NULL DEFAULT NULL, 
  ADD COLUMN `Groupname` varchar(64)  NOT NULL DEFAULT '' AFTER `UserName`, 
  ADD COLUMN `xascendsessionsvrkey` varchar(10)  DEFAULT NULL AFTER `AcctStopDelay`;
 

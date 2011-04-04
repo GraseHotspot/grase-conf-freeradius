@@ -156,7 +156,23 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in sql.conf
-	sql
+	sql{
+	    notfound = 1
+	    reject = 2
+	}
+	if(notfound){
+        update reply {
+            Reply-Message := "Login Failed. Please check your Username and Password"
+        }
+        ok = reject
+	}
+	
+	if(reject){
+        update reply {
+            Reply-Message := "Login Failed. Please check your Username and Password"
+        }
+        ok = reject
+	}	
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -177,11 +193,38 @@ authorize {
 	# Use the checkval module
 #	checkval
 
-	expiration
+	expiration{
+        userlock = 1
+    }
+    if(userlock){
+            update reply {
+                    Reply-Message := "Your account has expired, %{User-Name}"
+            }
+            ok = reject
+    }
+    
 	logintime
 
-	noresetBytecounter
-	noresetcounter
+	noresetBytecounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your bandwidth limit"
+            }
+            ok = reject
+    }
+
+	
+	noresetcounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your time limit"
+            }
+            ok = reject
+    }
 
 	#
 	#  If no other module has claimed responsibility for
@@ -509,6 +552,9 @@ post-auth {
 	#  'edir_account_policy_check = yes' in the ldap module configuration
 	#
 	Post-Auth-Type REJECT {
+        update reply { # Fallback error message
+            Reply-Message = "Login Failed. Please check your username and password"
+        }
 		attr_filter.access_reject
 	}
 }
