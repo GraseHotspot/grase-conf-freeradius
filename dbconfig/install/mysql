@@ -194,9 +194,10 @@ CREATE TABLE IF NOT EXISTS `radreply` (
   `op` char(2) NOT NULL default '=',
   `Value` varchar(253) NOT NULL default '',
   PRIMARY KEY  (`id`),
-  KEY `UserName` (`UserName`(32)),
-  UNIQUE KEY `userattribute` (`UserName`,`Attribute`,`op`)  
+  KEY `UserName` (`UserName`(32))
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+# UNIQUE KEY `userattribute` (`UserName`,`Attribute`,`op`)  
 
 --
 -- Table structure for table `radusercomment`
