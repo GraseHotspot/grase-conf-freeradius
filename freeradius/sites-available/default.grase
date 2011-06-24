@@ -225,6 +225,46 @@ authorize {
             }
             ok = reject
     }
+    
+    monthlycounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your monthly time limit"
+            }
+            ok = reject
+    }
+    
+    weeklycounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your weekly time limit"
+            }
+            ok = reject
+    }
+    
+    dailycounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your daily time limit"
+            }
+            ok = reject
+    }
+    
+    hourlycounter{
+        reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "You have reached your hourly time limit"
+            }
+            ok = reject
+    }
 
 	#
 	#  If no other module has claimed responsibility for
