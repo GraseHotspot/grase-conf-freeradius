@@ -507,11 +507,13 @@ accounting {
 #  or rlm_sql module can handle this.
 #  The rlm_sql module is *much* faster
 session {
-	radutmp
+
 
 	#
 	#  See "Simultaneous Use Checking Queries" in sql.conf
-#	sql
+	sql
+	
+	radutmp	
 }
 
 

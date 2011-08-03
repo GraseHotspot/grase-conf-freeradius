@@ -104,4 +104,13 @@ sql {
 
 	# Read driver-specific configuration
 	$INCLUDE sql/${database}/dialup.conf
+	
+	# GRASE Hotspot overrides
+	default_user_profile = "DEFAULT_GRASE"
+	
+	simul_count_query = "SELECT COUNT(*) \
+                         FROM ${acct_table1} \
+                         WHERE username = '%{SQL-User-Name}' \
+                         AND acctstoptime IS NULL"
+
 }
