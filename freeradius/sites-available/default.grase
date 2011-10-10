@@ -456,7 +456,7 @@ accounting {
 	#
 	#  Due to packet losses in the network, the data here
 	#  may be incorrect.  There is little we can do about it.
-	radutmp
+	#radutmp
 #	sradutmp
 
 	#  Return an address to the IP Pool when we see a stop record.
@@ -513,7 +513,7 @@ session {
 	#  See "Simultaneous Use Checking Queries" in sql.conf
 	sql
 	
-	radutmp	
+	# radutmp	
 }
 
 
@@ -594,6 +594,13 @@ post-auth {
 	#  'edir_account_policy_check = yes' in the ldap module configuration
 	#
 	Post-Auth-Type REJECT {
+	    if ( "%{reply:Reply-Message}" == "\r\nYou are already logged in - access denied\r\n\n" ) {
+            update reply {
+                Reply-Message := "You are already logged in at another location.<br/>Please try again in 5 minutes"
+            } 
+        }
+	    
+	
         update reply { # Fallback error message
             Reply-Message = "Login Failed. Please check your username and password"
         }
