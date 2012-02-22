@@ -57,8 +57,8 @@ sqlcounter hourlycounter {
 	# previous reset period into the current period but
 	# involves more work for the SQL server than those
 	# below
-	query = "SELECT SUM(acctsessiontime - \
-                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)) \
+	query = "SELECT COALESCE(SUM(acctsessiontime - \
+                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)), 0) \
                  FROM radacct WHERE username = '%{%k}' AND \
                  UNIX_TIMESTAMP(acctstarttime) + acctsessiontime > '%b'"
 
@@ -88,8 +88,8 @@ sqlcounter dailycounter {
 	# previous reset period into the current period but
 	# involves more work for the SQL server than those
 	# below
-	query = "SELECT SUM(acctsessiontime - \
-                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)) \
+	query = "SELECT COALESCE(SUM(acctsessiontime - \
+                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)), 0) \
                  FROM radacct WHERE username = '%{%k}' AND \
                  UNIX_TIMESTAMP(acctstarttime) + acctsessiontime > '%b'"
 
@@ -119,8 +119,8 @@ sqlcounter weeklycounter {
 	# previous reset period into the current period but
 	# involves more work for the SQL server than those
 	# below
-	query = "SELECT SUM(acctsessiontime - \
-                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)) \
+	query = "SELECT COALESCE(SUM(acctsessiontime - \
+                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)), 0) \
                  FROM radacct WHERE username = '%{%k}' AND \
                  UNIX_TIMESTAMP(acctstarttime) + acctsessiontime > '%b'"
 
@@ -150,8 +150,8 @@ sqlcounter monthlycounter {
 	# previous reset period into the current period but
 	# involves more work for the SQL server than those
 	# below
-	query = "SELECT SUM(acctsessiontime - \
-                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)) \
+	query = "SELECT COALESCE(SUM(acctsessiontime - \
+                 GREATEST((%b - UNIX_TIMESTAMP(acctstarttime)), 0)), 0) \
                  FROM radacct WHERE username='%{%k}' AND \
                  UNIX_TIMESTAMP(acctstarttime) + acctsessiontime > '%b'"
 
@@ -175,7 +175,7 @@ sqlcounter noresetcounter {
                 sqlmod-inst = sql 
                 key = User-Name 
                 reset = never 
-        query = "SELECT IFNULL(SUM(AcctSessionTime),0) FROM radacct WHERE UserName='%{%k}'" 
+        query = "SELECT COALESCE(SUM(AcctSessionTime),0) FROM radacct WHERE UserName='%{%k}'" 
 } 
 
 sqlcounter noresetBytecounter {
@@ -185,7 +185,7 @@ sqlcounter noresetBytecounter {
             sqlmod-inst = sql
             key = User-Name
             reset = never
-        query = "SELECT (IFNULL(SUM(AcctInputOctets)+SUM(AcctOutputOctets),0)) FROM radacct WHERE UserName='%{%k}'"
+        query = "SELECT (COALESCE(SUM(AcctInputOctets)+SUM(AcctOutputOctets),0)) FROM radacct WHERE UserName='%{%k}'"
 }
 
 #sqlcounter hourlyBytecounter {

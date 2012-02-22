@@ -1,3 +1,9 @@
+grase-conf-freeradius (1.8) purewhite; urgency=low
+
+  * Recurring limits not applied on first login due to NULL fixes #60
+
+ -- Tim White <tim@hotspot.purewhite.id.au>  Wed, 22 Feb 2012 10:00:12 +1000
+
 grase-conf-freeradius (1.7) purewhite; urgency=low
 
   * Simultaneous-Use error message broke JSON in Coova Chilli
