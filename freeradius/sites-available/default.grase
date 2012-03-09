@@ -203,7 +203,15 @@ authorize {
             ok = reject
     }
     
-	logintime
+	logintime {
+	    reject = 1
+    }
+    if(reject){
+            update reply {
+                    Reply-Message := "Your are not allowed to login at this time"
+            }
+            ok = reject
+    }
 
 	noresetBytecounter{
         reject = 1

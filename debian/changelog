@@ -1,3 +1,9 @@
+grase-conf-freeradius (1.9) purewhite; urgency=low
+
+  * Send back correct Reply-message when trying to login outside of Login-Time
+
+ -- Tim White <tim@hotspot.purewhite.id.au>  Fri, 09 Mar 2012 12:29:21 +1000
+
 grase-conf-freeradius (1.8) purewhite; urgency=low
 
   * Recurring limits not applied on first login due to NULL fixes #60
