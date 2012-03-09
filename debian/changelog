@@ -1,3 +1,9 @@
+grase-conf-freeradius (1.9.1) purewhite; urgency=low
+
+  * Post Auth query update
+
+ -- Tim White <tim@hotspot.purewhite.id.au>  Fri, 09 Mar 2012 13:52:34 +1000
+
 grase-conf-freeradius (1.9) purewhite; urgency=low
 
   * Send back correct Reply-message when trying to login outside of Login-Time

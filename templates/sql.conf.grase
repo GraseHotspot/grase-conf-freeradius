@@ -101,16 +101,28 @@ sql {
 
 	# Table to keep radius client info
 	nas_table = "nas"
-
-	# Read driver-specific configuration
-	$INCLUDE sql/${database}/dialup.conf
+	
 	
 	# GRASE Hotspot overrides
 	default_user_profile = "DEFAULT_GRASE"
-	
+
+	## Read GRASE postauth before loading dialup.conf as first loaded overrides
+    postauth_query = "INSERT INTO ${postauth_table} \
+                          (username, pass, reply, authdate, ServiceType, FramedIPAddress, CallingStationId) \
+                          VALUES ( \
+                          '%{User-Name}', \
+                          '%{%{User-Password}:-%{Chap-Password}}', \
+                          '%{reply:Packet-Type}', '%S', \
+                          '%{Service-Type}', '%{Framed-IP-Address}', '%{Calling-Station-Id}')"
+
 	simul_count_query = "SELECT COUNT(*) \
                          FROM ${acct_table1} \
                          WHERE username = '%{SQL-User-Name}' \
                          AND acctstoptime IS NULL"
+
+
+	# Read driver-specific configuration
+	$INCLUDE sql/${database}/dialup.conf
+	
 
 }
