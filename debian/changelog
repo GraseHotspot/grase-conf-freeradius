@@ -1,3 +1,10 @@
+grase-conf-freeradius (1.9.2) purewhite; urgency=low
+
+  * Updating things to point to grasehotspot.org
+  * Prevent detail logging to /var/log/freeradius/radacct as it fills up drives slowly
+
+ -- Tim White <tim@grasehotspot.org>  Fri, 18 May 2012 08:08:03 +1000
+
 grase-conf-freeradius (1.9.1) purewhite; urgency=low
 
   * Post Auth query update

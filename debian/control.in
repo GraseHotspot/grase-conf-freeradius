@@ -1,10 +1,10 @@
 Source: grase-conf-freeradius
 Section: config
 Priority: extra
-Maintainer: Tim White <tim@hotspot.purewhite.id.au>
+Maintainer: Tim White <tim@grasehotspot.org>
 Build-Depends: @cdbs@, config-package-dev
 Standards-Version: 3.8.4
-Homepage: http://hotspot.purewhite.id.au/
+Homepage: http://grasehotspot.org/
 
 Package: grase-conf-freeradius
 Architecture: all
