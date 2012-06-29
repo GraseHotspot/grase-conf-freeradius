@@ -1,3 +1,9 @@
+grase-conf-freeradius (1.9.3) purewhite; urgency=low
+
+  * Log failed logins to postauth as well 
+
+ -- Tim White <tim@grasehotspot.org>  Sat, 30 Jun 2012 07:39:25 +1000
+
 grase-conf-freeradius (1.9.2) purewhite; urgency=low
 
   * Updating things to point to grasehotspot.org
