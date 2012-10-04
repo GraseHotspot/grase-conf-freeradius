@@ -15,7 +15,7 @@ mkdir -p /etc/grase/
 dbc_first_version=3.0
 dbc_generate_include="template:/etc/grase/radius.conf"
 dbc_generate_include_perms="660"
-dbc_generate_include_owner="root:www-data"
+dbc_generate_include_owner="freerad:www-data"
 dbc_generate_include_args="-o template_infile=/usr/share/grase/templates/radius.conf -U"
 
 dbc_go grase-conf-freeradius $@
@@ -35,6 +35,9 @@ sed -i 's/testing123/hotspotradius/m' /etc/freeradius/clients.conf
 
 chown root:freerad /etc/freeradius/sql.conf.grase
 chmod 640 /etc/freeradius/sql.conf.grase
+
+# On the off chance the radius.conf file is wrong, we need to make sure its right
+chown freerad:www-data /etc/grase/radius.conf
 
 #DEBHELPER#
 
