@@ -39,6 +39,14 @@ chmod 640 /etc/freeradius/sql.conf.grase
 # On the off chance the radius.conf file is wrong, we need to make sure its right
 chown freerad:www-data /etc/grase/radius.conf
 
+# Fix for Debian/Ubuntu bug to do with Perl
+preloader=`grep "export LD_PRELOAD" /etc/default/freeradius || true`
+    if [ "$preloader" = "" ]
+    then
+         touch /etc/default/freeradius
+         echo "export LD_PRELOAD=/usr/lib/libperl.so" >> /etc/default/freeradius
+    fi
+
 #DEBHELPER#
 
 if which invoke-rc.d >/dev/null 2>&1; then
