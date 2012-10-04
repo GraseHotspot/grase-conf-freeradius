@@ -31,3 +31,13 @@ $INCLUDE	/usr/share/doc/coova-chilli/dictionary.chillispot
 #ATTRIBUTE	My-Local-String		3000	string
 #ATTRIBUTE	My-Local-IPAddr		3001	ipaddr
 #ATTRIBUTE	My-Local-Integer	3002	integer
+ATTRIBUTE       Max-Octets              3050    integer
+ATTRIBUTE       Max-Hourly-Octets       3051    integer
+ATTRIBUTE       Max-Daily-Octets        3052    integer
+ATTRIBUTE       Max-Weekly-Octets       3053    integer
+ATTRIBUTE       Max-Monthly-Octets      3054    integer
+ATTRIBUTE       Max-All-Session         3060    integer
+ATTRIBUTE       Max-Hourly-Session      3061    integer
+ATTRIBUTE       Max-Daily-Session       3062    integer
+ATTRIBUTE       Max-Weekly-Session      3063    integer
+ATTRIBUTE       Max-Monthly-Session     3064    integer
