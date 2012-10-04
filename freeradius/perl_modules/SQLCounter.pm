@@ -62,7 +62,7 @@ use POSIX;
 #===============================================================
 #===== CONFIGURATION DATA ======================================
 #===============================================================
-my $config_file = '/usr/local/etc/raddb/rlm_perl_modules/conf/settings.conf';
+my $config_file = '/etc/freeradius/perl_modules/conf/settings.conf';
 #===============================================================
 #===== END of Configuration Data ===============================
 #===============================================================
@@ -108,7 +108,10 @@ sub counter_check {
                 #Determine the check attribute
                 my $check_name = $counters_detail->{$key}{'check-name'};
                 my $reply_name = $counters_detail->{$key}{'reply-name'};
-
+                
+                my $giga_reply_name = $counters_detail->{$key}{'giga-reply-name'};
+                if(!defined $giga_reply_name){ $giga_reply_name = $reply_name =~ s/Octets/Gigawords/r;}
+                
                 #Have we got a key like this? (in the $check_hash for the user)
                 if(exists $check_hash->{$check_name}){
 
@@ -143,11 +146,30 @@ sub counter_check {
                         if(($reply_name eq 'Yfi-Data')or($reply_name eq 'Yfi-Time')){
                             $return_hash->{$reply_name} = $result;
                         }else{
+                            ## This is where the reject messages are if they have finished a counter
                             $return_hash->{'Reply-Message'} = "Depleted value for $reply_name";
                         }
                      }else{
-                        $return_hash->{$reply_name} = $result;
+                        # Easiest way to see if we need Gigawords splitting is if the reply-name has Octets in it
+                        if($reply_name =~ /Octets/)
+                        {
+                                my $int_max = 4294967296;
+                                if($result >= $int_max)
+                                {
 
+                                    # Split it into gigawords and octets
+                                    my $octets = $result % $int_max;
+                                    my $gigawords = int($result / $int_max);
+                                    $return_hash->{$reply_name} = $octets;
+                                    
+                                    $return_hash->{$giga_reply_name} = $gigawords;
+                                }else{
+
+                                    $return_hash->{$reply_name} = $result;
+                                }
+                        }else{
+                            $return_hash->{$reply_name} = $result;
+                        }
                     }
                 }
             }
@@ -238,6 +260,11 @@ sub create_sql_counter_hash {
 
             $sql_counter_hash->{$counter_name}{'reply-name'} = $self->get_sql_counter_atom($line);
         }
+        
+        if(($counter_record)&&($line =~ m/\s*gigareplyname/)){
+
+            $sql_counter_hash->{$counter_name}{'giga-reply-name'} = $self->get_sql_counter_atom($line);
+        }        
 
         if(($counter_record)&&($line =~ m/\s*sqlmod-inst/)){
 

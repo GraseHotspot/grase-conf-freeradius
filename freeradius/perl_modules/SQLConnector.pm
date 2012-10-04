@@ -3,27 +3,33 @@ package SQLConnector;
 use strict;
 use Data::Dumper;
 use DBI;
-use XML::Simple;
+#use XML::Simple;
+use Config::Simple;
 
 
 sub new {
 
     print "   SQLConnector::new called\n";
     my $type = shift;            # The package/type name
-    my $self = {'config_file' => '/usr/local/etc/raddb/rlm_perl_modules/conf/settings.conf'};               # Reference to empty hash
+    #my $self = {'config_file' => '/etc/grase/radius.conf'};               # Reference to empty hash
    
-    $self->{'xml'}              = XML::Simple->new;
-    $self->{'config_data'}      = $self->{'xml'}->XMLin($self->{'config_file'});
-    my $db_server               = $self->{'config_data'}->{mysql_server}->{ip};
-    my $db_name                 = $self->{'config_data'}->{mysql_server}->{dbname};
-    my $db_user                 = $self->{'config_data'}->{mysql_server}->{username};
-    my $db_password             = $self->{'config_data'}->{mysql_server}->{password};
+    my $self = {};
+    my $self->{'radiusconfig'} = {};
+    Config::Simple->import_from('/etc/grase/radius.conf', $self->{'radiusconfig'}) || die "Couldn't read our config file for database details in SQLConnector" . Config::Simple->error(); 
+    
+    print Dumper $self;  
+    
+    my $db_server               = $self->{'radiusconfig'}->{'sql_server'};
+    my $db_name                 = $self->{'radiusconfig'}->{'sql_database'};
+    my $db_user                 = $self->{'radiusconfig'}->{'sql_username'};
+    my $db_password             = $self->{'radiusconfig'}->{'sql_password'};
 
     $self->{'db_handle'}             =   DBI->connect("DBI:mysql:database=$db_name;host=$db_server",
                                      "$db_user", 
                                      "$db_password",
                                      { RaiseError => 1,
-                                       AutoCommit => 1 }) || die "Unable to connect to $db_server because $DBI::errstr";
+                                       AutoCommit => 1,
+                                       FetchHashKeyName => "NAME_lc" }) || die "Unable to connect to $db_server because $DBI::errstr";
     $self->{'db_handle'}->{'mysql_auto_reconnect'} = 1;
     return bless $self, $type;
 }
