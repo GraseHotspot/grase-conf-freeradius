@@ -59,10 +59,6 @@ sub authorize {
         # You can call another function from here:
         #&test_call;
         
-        $RAD_REPLY{'h323-credit-amount'} = "120";
-        warn "test.pl: Adding h323-credit-amount to reply";
-        print Dumper \%RAD_CHECK;
-        
         my $user = $RAD_REQUEST{'User-Name'};
         
         my $attributes = Attributes->new($db);

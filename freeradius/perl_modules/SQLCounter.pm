@@ -109,6 +109,9 @@ sub counter_check {
                 my $check_name = $counters_detail->{$key}{'check-name'};
                 my $reply_name = $counters_detail->{$key}{'reply-name'};
                 
+                # Our reject reply-message when the counter is finished
+                my $reply_message = $counters_detail->{$key}{'reply-message'};
+                
                 my $giga_reply_name = $counters_detail->{$key}{'giga-reply-name'};
                 if(!defined $giga_reply_name){ $giga_reply_name = $reply_name =~ s/Octets/Gigawords/r;}
                 
@@ -147,7 +150,7 @@ sub counter_check {
                             $return_hash->{$reply_name} = $result;
                         }else{
                             ## This is where the reject messages are if they have finished a counter
-                            $return_hash->{'Reply-Message'} = "Depleted value for $reply_name";
+                            $return_hash->{'Reply-Message'} = defined($reply_message) ? $reply_message : "Depleted value for $reply_name";
                         }
                      }else{
                         # Easiest way to see if we need Gigawords splitting is if the reply-name has Octets in it
@@ -260,6 +263,13 @@ sub create_sql_counter_hash {
 
             $sql_counter_hash->{$counter_name}{'reply-name'} = $self->get_sql_counter_atom($line);
         }
+        
+        if(($counter_record)&&($line =~ m/\s*reply-message/)){
+            $line =~ s/\s*reply-message\s*=\s*//;
+            $line =~ s/^"//;
+            $line =~ s/"$//;
+            $sql_counter_hash->{$counter_name}{'reply-message'} = $line;
+        }        
         
         if(($counter_record)&&($line =~ m/\s*gigareplyname/)){
 
