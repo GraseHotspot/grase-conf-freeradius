@@ -34,8 +34,6 @@ sub CLONE {
 } 
 
 
-warn "Loaded test.pl";
-
 # This the remapping of return values
 #
 use constant {

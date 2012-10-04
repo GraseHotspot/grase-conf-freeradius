@@ -141,7 +141,7 @@ sub counter_check {
                     }
                     my $result      = $big_val - ($current_val);
                     #print "NEED TO SUBTRACT $current_val FROM $big_val RESULT $result\n";
-                    if($result < 0){
+                    if($result <= 0){
                         #Some attribute values we want to return as a negative value
                         #---------------------------------------------------------
                         #--- YFi FEATURE : IGNORE Yfi-Data & Yfi-Time Depletion---
