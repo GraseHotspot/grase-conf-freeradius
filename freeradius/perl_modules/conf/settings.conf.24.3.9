@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!--
+    #============================================================================
+    Config file specifying the DB to connect to and the username and password to connect as.
+    Also the files which contains info about the sqlcounters defiend and active for this FreeRADIUS
+    #============================================================================
+-->
+<config>
+    <mysql_server>
+      <ip>127.0.0.1</ip>
+      <dbname>radius</dbname>
+      <username>radius</username>
+      <password>radius</password>
+    </mysql_server>
+    <radius_conf>
+        <sql_counter_file>/usr/local/etc/raddb/sqlcounter.conf</sql_counter_file>
+        <active_counters_defined>/usr/local/etc/raddb/sites-available/default</active_counters_defined>
+    </radius_conf>
+    <config_token>
+        <unshaped_normal>LOCAL_LIMITED</unshaped_normal>
+    </config_token>
+    <email>
+        <sender_name>isp@co.za</sender_name>
+        <smtp_relay>smtp.co.za</smtp_relay>
+    </email>
+    <telkom_pod>
+        <pod_script>/var/www/cake/hotcakes/webroot/files/radpod_telkom</pod_script>
+    </telkom_pod>
+</config>
