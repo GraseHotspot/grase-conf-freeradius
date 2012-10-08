@@ -113,7 +113,7 @@ sub counter_check {
                 my $reply_message = $counters_detail->{$key}{'reply-message'};
                 
                 my $giga_reply_name = $counters_detail->{$key}{'giga-reply-name'};
-                if(!defined $giga_reply_name){ $giga_reply_name = $reply_name =~ s/Octets/Gigawords/r;}
+                if(!defined $giga_reply_name){ ($giga_reply_name = $reply_name) =~ s/Octets/Gigawords/;}
                 
                 #Have we got a key like this? (in the $check_hash for the user)
                 if(exists $check_hash->{$check_name}){

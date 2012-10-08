@@ -43,8 +43,9 @@ chown freerad:www-data /etc/grase/radius.conf
 preloader=`grep "export LD_PRELOAD" /etc/default/freeradius || true`
     if [ "$preloader" = "" ]
     then
+         libperl=$(find /usr/lib/ -name "libperl.so*"|awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }')
          touch /etc/default/freeradius
-         echo "export LD_PRELOAD=/usr/lib/libperl.so" >> /etc/default/freeradius
+         echo "export LD_PRELOAD=$libperl" >> /etc/default/freeradius
     fi
 
 #DEBHELPER#
