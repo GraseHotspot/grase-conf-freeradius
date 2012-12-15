@@ -2,7 +2,7 @@ grase-conf-freeradius (1.9.4) UNRELEASED; urgency=low
 
   * New Perl Modules to handle SQLCounter stuff (most code from Yfi Hotcakes)
 
- -- Tim White <tim@grasehotspot.org>  Thu, 04 Oct 2012 16:23:08 +1000
+ -- Tim White <tim@grasehotspot.org>  Thu, 24 Oct 2012 13:35:00 +1000
 
 grase-conf-freeradius (1.9.3) purewhite; urgency=low
 

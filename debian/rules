@@ -9,7 +9,7 @@ DEB_DIVERT_FILES_grase-conf-freeradius += \
 	/etc/freeradius/sites-available/default.grase \
 	/etc/freeradius/dictionary.grase \
 	/etc/freeradius/sql/mysql/counter.conf.grase \
-	/etc/freeradius/modules/perl.grase
+#	/etc/freeradius/modules/perl.grase
 #	/etc/mailname.debathena \
 #	/etc/papersize.debathena
 #DEB_TRANSFORM_FILES_grase-conf-freeradius += \

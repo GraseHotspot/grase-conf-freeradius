@@ -363,6 +363,11 @@ sub get_timestamp {
 
         return start_of_day();
     }
+    
+     if($reset eq "hourly"){
+
+        return start_of_hour();
+    }    
     return mktime (0, 0, 0, 1, 1, (2004 - 1900), 0, 0);
 }
 
@@ -410,6 +415,20 @@ sub start_of_day {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime(time);
     #create a new timestamp:
     my $unixtime = mktime (0, 0, 0, $mday, $mon, $year, 0, 0);
+    return $unixtime;
+
+    #Debug info
+    #($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime($unixtime);
+    #printf "%4d-%02d-%02d %02d:%02d:%02d\n",
+    #$year+1900,$mon+1,$mday,$hour,$min,$sec;
+}
+
+sub start_of_hour {
+
+    #Get the current timestamp;
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime(time);
+    #create a new timestamp:
+    my $unixtime = mktime (0, 0, $hour, $mday, $mon, $year, 0, 0);
     return $unixtime;
 
     #Debug info
