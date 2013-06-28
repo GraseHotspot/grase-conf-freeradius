@@ -105,6 +105,9 @@ sql {
 	
 	# GRASE Hotspot overrides
 	default_user_profile = "DEFAULT_GRASE"
+    
+    # When a user isn't found, do we try the default profile?
+    #query_on_not_found = yes
 
 	## Read GRASE postauth before loading dialup.conf as first loaded overrides
     postauth_query = "INSERT INTO ${postauth_table} \
