@@ -62,6 +62,10 @@ sub authorize {
         my $attributes = Attributes->new($db);
 
         my $check_hash = $attributes->check_attributes($user);        
+
+        foreach my $checkkey (keys %RAD_CHECK){
+            $check_hash->{$checkkey} = $RAD_CHECK{$checkkey};
+        }
         
         my $sql_counter_reply = $sql_counter->counter_check($user,$check_hash);
 
