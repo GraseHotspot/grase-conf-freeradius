@@ -13,10 +13,16 @@ if [ -f /usr/share/dbconfig-common/dpkg/postrm.mysql ]; then
 fi
 
 
-#if [ "$1" = "purge" ]; then
-
-
-#fi
+if [ "$1" = "purge" ]; then
+    rm -f /etc/freeradius/sql.conf.grase
+    rm -f /etc/grase/radius.conf
+    if which ucf >/dev/null 2>&1; then
+        ucf --purge /etc/freeradius/sql.conf.grase
+        ucf --purge /etc/grase/radius.conf
+        ucfr --purge grase-conf-freeradius /etc/grase/radius.conf
+        ucfr --purge grase-conf-freeradius /etc/freeradius/sql.conf.grase
+    fi
+fi
 
 #DEBHELPER#
 
