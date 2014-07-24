@@ -1,4 +1,3 @@
-files/* /
 templates/* /usr/share/grase/templates/
 dbconfig/* /usr/share/dbconfig-common/data/grase-conf-freeradius/
 freeradius/* /etc/freeradius/
