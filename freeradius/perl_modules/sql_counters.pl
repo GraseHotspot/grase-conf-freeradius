@@ -86,9 +86,14 @@ sub authorize {
                                 return RLM_MODULE_REJECT;
                         }
                 }
-        }        
+        }
+
+        my $reply_hash;
+        foreach my $replykey (keys %RAD_REPLY){
+            $reply_hash->{$replykey} = $RAD_REPLY{$replykey};
+        }
         
-        my $expire_reply = $expirecheck->expire_check($user,$check_hash,$RAD_REPLY);
+        my $expire_reply = $expirecheck->expire_check($user,$check_hash,$reply_hash);
 
         if(defined $expire_reply){
 
