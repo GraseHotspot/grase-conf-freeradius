@@ -9,6 +9,7 @@ use lib "/etc/freeradius/perl_modules";
 #use DatabaseConnection;
 use SQLConnector;
 use SQLCounter;
+use SQLExpire;
 use Attributes;
 use Data::Dumper;
 
@@ -23,6 +24,7 @@ our (%RAD_REQUEST, %RAD_REPLY, %RAD_CHECK);
 
 our $db;
 our $sql_counter;
+our $expirecheck;
 sub CLONE {
 
         $db = new SQLConnector();
@@ -31,6 +33,7 @@ sub CLONE {
     #Create a $sql_counter object which will read the counters defined once (its good to avoid unnecesary file reads)
     $sql_counter    = SQLCounter->new($db);
     $sql_counter->create_sql_counter_hash();
+    $expirecheck = SQLExpire->new($db);
 } 
 
 
@@ -85,7 +88,19 @@ sub authorize {
                 }
         }        
         
-        
+        my $expire_reply = $expirecheck->expire_check($user,$check_hash,$RAD_REPLY);
+
+        if(defined $expire_reply){
+
+                foreach my $key (keys %{$expire_reply}){
+
+                        $RAD_REPLY{$key} = $expire_reply->{$key};
+                        #If there was an error the 'Reply-Message' will have a value, if so return with a 0
+                        if($key eq 'Reply-Message'){ 
+                                return RLM_MODULE_REJECT;
+                        }
+                }
+        }         
         # TODO Only send UPDATED if we have actually changed things
         return RLM_MODULE_UPDATED;
 }

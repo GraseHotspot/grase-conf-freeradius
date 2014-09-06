@@ -41,3 +41,4 @@ ATTRIBUTE       Max-Hourly-Session      3061    integer
 ATTRIBUTE       Max-Daily-Session       3062    integer
 ATTRIBUTE       Max-Weekly-Session      3063    integer
 ATTRIBUTE       Max-Monthly-Session     3064    integer
+ATTRIBUTE       GRASE-ExpireAfter       3065    string

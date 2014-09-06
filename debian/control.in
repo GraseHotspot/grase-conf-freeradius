@@ -9,7 +9,7 @@ Homepage: http://grasehotspot.org/
 Package: grase-conf-freeradius
 Architecture: all
 Pre-Depends: freeradius, freeradius-mysql, coova-chilli (>= 1.2.6grase3 ), mysql-client, mysql-server
-Depends: dbconfig-common, ${misc:Depends}, libconfig-simple-perl, libxml-simple-perl
+Depends: dbconfig-common, ${misc:Depends}, libconfig-simple-perl, libxml-simple-perl, libtime-parsedate-perl
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}
 Description: Config files for FreeRADIUS for the GRASE Hotspot System
