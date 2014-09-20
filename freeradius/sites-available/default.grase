@@ -156,23 +156,23 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in sql.conf
-	sql{
-	    notfound = 1
-	    reject = 2
-	}
-	if(notfound){
+    sql{
+        notfound = 1
+        reject = 2
+    }
+    if(notfound){
         update reply {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
         ok = reject
-	}
-	
-	if(reject){
+    }
+
+    if(reject){
         update reply {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
         ok = reject
-	}	
+    }
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -193,7 +193,7 @@ authorize {
 	# Use the checkval module
 #	checkval
 
-	expiration{
+    expiration{
         userlock = 1
     }
     if(userlock){
@@ -202,9 +202,12 @@ authorize {
             }
             ok = reject
     }
-    
-	logintime {
-	    reject = 1
+
+    # Perl now handles our counters
+    graseperl
+
+    logintime {
+        reject = 1
     }
     if(reject){
             update reply {
@@ -212,9 +215,7 @@ authorize {
             }
             ok = reject
     }
-    
-    # Perl now handles our counters
-    graseperl
+
 
 #	noresetBytecounter{
 #        reject = 1
