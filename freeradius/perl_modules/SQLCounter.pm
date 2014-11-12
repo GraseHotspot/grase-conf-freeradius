@@ -127,7 +127,7 @@ sub counter_check {
                     #Filter out the '%b' and replace it wit the correct unix timestamp
                     $sql_query      =~ s/%b/$timestamp/g;
                     $sql_query      =~ s/"//g;
-                  #  print "HEADS UP $sql_query\n";
+                    #  print "HEADS UP $sql_query\n";
                     #--- NOTE: This may be a performance bottleneck! because the 'prepare' happens every time --- 
                     #--- IF performance is a problem --- start here!---------------------------------------------
                     #--------------------------------------------------------------------------------------------
@@ -152,24 +152,46 @@ sub counter_check {
                             ## This is where the reject messages are if they have finished a counter
                             $return_hash->{'Reply-Message'} = defined($reply_message) ? $reply_message : "Depleted value for $reply_name";
                         }
-                     }else{
+                    }else{
                         # Easiest way to see if we need Gigawords splitting is if the reply-name has Octets in it
                         if($reply_name =~ /Octets/)
                         {
-                                my $int_max = 4294967296;
-                                if($result >= $int_max)
-                                {
+                            my $int_max = 4294967296;
+                            my $octets = 0;
+                            my $gigawords = 0;
+                            if($result >= $int_max)
+                            {
 
-                                    # Split it into gigawords and octets
-                                    my $octets = $result % $int_max;
-                                    my $gigawords = int($result / $int_max);
+                                # Split it into gigawords and octets
+                                $octets = $result % $int_max;
+                                $gigawords = int($result / $int_max);
+                            }else{
+                                $octets = $result;
+                                $gigawords = 0;
+                            }
+
+                            if(exists $return_hash->{$reply_name}) {
+                                my $current_val = $return_hash->{$reply_name};
+                                my $current_gigawords = $return_hash->{$giga_reply_name};
+
+                                if($gigawords <= $current_gigawords and $octets < $current_val) {
                                     $return_hash->{$reply_name} = $octets;
-                                    
                                     $return_hash->{$giga_reply_name} = $gigawords;
-                                }else{
+                                }
+                            } else {
+                                $return_hash->{$reply_name} = $octets;
+                                $return_hash->{$giga_reply_name} = $gigawords;
+                            }
 
+                        }elsif($reply_name =~ /Session-Timeout/) {
+                            if(exists $return_hash->{$reply_name}) {
+                                if($result < $return_hash->{$reply_name}) {
                                     $return_hash->{$reply_name} = $result;
                                 }
+                            } else {
+                               $return_hash->{$reply_name} = $result;
+                            }
+
                         }else{
                             $return_hash->{$reply_name} = $result;
                         }
@@ -250,17 +272,14 @@ sub create_sql_counter_hash {
         }
 
         if(($counter_record)&&($line =~ m/\s*counter-name/)){
-
             $sql_counter_hash->{$counter_name}{'counter-name'} = $self->get_sql_counter_atom($line);
         }
 
         if(($counter_record)&&($line =~ m/\s*check-name/)){
-
             $sql_counter_hash->{$counter_name}{'check-name'} = $self->get_sql_counter_atom($line);
         }
 
         if(($counter_record)&&($line =~ m/\s*reply-name/)){
-
             $sql_counter_hash->{$counter_name}{'reply-name'} = $self->get_sql_counter_atom($line);
         }
         
@@ -272,27 +291,22 @@ sub create_sql_counter_hash {
         }        
         
         if(($counter_record)&&($line =~ m/\s*gigareplyname/)){
-
             $sql_counter_hash->{$counter_name}{'giga-reply-name'} = $self->get_sql_counter_atom($line);
-        }        
+        }
 
         if(($counter_record)&&($line =~ m/\s*sqlmod-inst/)){
-
             $sql_counter_hash->{$counter_name}{'sqlmod-inst'} = $self->get_sql_counter_atom($line);
         }
 
         if(($counter_record)&&($line =~ m/\s*key/)){
-
             $sql_counter_hash->{$counter_name}{'key'} = $self->get_sql_counter_atom($line);
         }
 
         if(($counter_record)&&($line =~ m/\s*reset/)){
-
             $sql_counter_hash->{$counter_name}{'reset'} = $self->get_sql_counter_atom($line);
         }
 
         if(($counter_record)&&($line =~ m/\s*query/)){
-
             $line =~ s/\s*query\s*=\s*//;
             $sql_counter_hash->{$counter_name}{'query'} = $line;
         }
@@ -318,13 +332,11 @@ sub get_sql_counter_atom {
 sub find_if_sqlcounter_is_active {
     
     my ($self,$sql_counter_name) = @_;
-
     my @auth_section_ent    = $self->get_active_counters_from_settings();
 
     foreach my $entry (@auth_section_ent){
 
         if($entry eq $sql_counter_name){
-        
             return 1;
         }
     }
@@ -335,10 +347,8 @@ sub find_if_sqlcounter_is_active {
 sub get_active_counters_from_settings {
 
     my ($self) = @_;
-
     my @active_counters;
     foreach my $counter(@{$self->{'config_data'}->{sql_counters}{'counter'}}){
-
         push(@active_counters,$counter);
     }
     return @active_counters;
@@ -350,22 +360,18 @@ sub get_timestamp {
     my($self,$reset) = @_;
 
     if($reset eq "monthly"){
-
         return $self->start_of_month();
     }
 
     if($reset eq "weekly"){
-
         return start_of_week();
     }
 
      if($reset eq "daily"){
-
         return start_of_day();
     }
     
      if($reset eq "hourly"){
-
         return start_of_hour();
     }    
     return mktime (0, 0, 0, 1, 1, (2004 - 1900), 0, 0);
