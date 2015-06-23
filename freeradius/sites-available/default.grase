@@ -165,6 +165,7 @@ authorize {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
         ok = reject
+        reject
     }
 
     if(reject){
@@ -172,6 +173,7 @@ authorize {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
         ok = reject
+        reject
     }
 
 	#
@@ -201,6 +203,7 @@ authorize {
                     Reply-Message := "Your account has expired, %{User-Name}"
             }
             ok = reject
+            reject
     }
 
     # Perl now handles our counters
@@ -214,6 +217,7 @@ authorize {
                     Reply-Message := "Your are not allowed to login at this time"
             }
             ok = reject
+            reject
     }
 
 
