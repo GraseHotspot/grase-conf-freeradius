@@ -164,7 +164,6 @@ authorize {
         update reply {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
-        ok = reject
         reject
     }
 
@@ -172,7 +171,6 @@ authorize {
         update reply {
             Reply-Message := "Login Failed. Please check your Username and Password"
         }
-        ok = reject
         reject
     }
 
@@ -202,7 +200,6 @@ authorize {
             update reply {
                     Reply-Message := "Your account has expired, %{User-Name}"
             }
-            ok = reject
             reject
     }
 
@@ -216,7 +213,6 @@ authorize {
             update reply {
                     Reply-Message := "Your are not allowed to login at this time"
             }
-            ok = reject
             reject
     }
 
@@ -228,7 +224,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your bandwidth limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 
 	
@@ -239,7 +235,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your time limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 #    
 #    monthlycounter{
@@ -249,7 +245,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your monthly time limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 #    
 #    weeklycounter{
@@ -259,7 +255,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your weekly time limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 #    
 #    dailycounter{
@@ -269,7 +265,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your daily time limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 #    
 #    hourlycounter{
@@ -279,7 +275,7 @@ authorize {
 #            update reply {
 #                    Reply-Message := "You have reached your hourly time limit"
 #            }
-#            ok = reject
+#            reject
 #    }
 
 	#
