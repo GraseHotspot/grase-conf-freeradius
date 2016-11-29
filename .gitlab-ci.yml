@@ -9,3 +9,4 @@ jessie-amd64:
     paths:
       - artifacts/
     expire_in: 1 week
+
