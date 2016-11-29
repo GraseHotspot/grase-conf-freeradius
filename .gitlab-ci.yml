@@ -1,0 +1,11 @@
+jessie-amd64:
+  image: grase/build-images:jessie
+  script:
+    - dch -v $(git describe |tr '-' '.') -b "Nightly"
+    - dpkg-buildpackage
+    - mkdir artifacts
+    - mv -v ../grase-conf-freeradius_* artifacts/
+  artifacts:
+    paths:
+      - artifacts/
+    expire_in: 1 week
