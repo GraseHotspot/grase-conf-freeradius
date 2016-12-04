@@ -1,6 +1,7 @@
 jessie-amd64:
   image: grase/build-images:jessie
   script:
+    - apt-get update; apt-get install config-package-dev
     - dch -v $(git describe |tr '-' '.') -b "Nightly"
     - dpkg-buildpackage
     - mkdir artifacts
