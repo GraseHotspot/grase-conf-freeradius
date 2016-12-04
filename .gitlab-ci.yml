@@ -1,4 +1,5 @@
-jessie-amd64:
+build:
+  stage: build
   image: grase/build-images:jessie
   script:
     - dch -M -v $(git describe |tr '-' '.') -b "Nightly"
@@ -10,3 +11,6 @@ jessie-amd64:
       - artifacts/
     expire_in: 1 week
 
+#deploy:
+#  stage: deploy
+#  script:
