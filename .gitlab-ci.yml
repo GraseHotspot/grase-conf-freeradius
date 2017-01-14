@@ -1,7 +1,8 @@
-jessie-amd64:
+jessie-all:
+  stage: build
   image: grase/build-images:jessie
   script:
-    - dch -v $(git describe |tr '-' '.') -b "Nightly"
+    - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
     - dpkg-buildpackage
     - mkdir artifacts
     - mv -v ../grase-conf-freeradius_* artifacts/
@@ -10,3 +11,28 @@ jessie-amd64:
       - artifacts/
     expire_in: 1 week
 
+trusty-all:
+  stage: build
+  image: grase/build-images:trusty
+  script:
+    - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
+    - dpkg-buildpackage
+    - mkdir artifacts
+    - mv -v ../grase-conf-freeradius_* artifacts/
+  artifacts:
+    paths:
+      - artifacts/
+    expire_in: 1 week
+
+xenial-all:
+  stage: build
+  image: grase/build-images:xenial
+  script:
+    - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
+    - dpkg-buildpackage
+    - mkdir artifacts
+    - mv -v ../grase-conf-freeradius_* artifacts/
+  artifacts:
+    paths:
+      - artifacts/
+    expire_in: 1 week
