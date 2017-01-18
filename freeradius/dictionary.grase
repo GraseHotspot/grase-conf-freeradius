@@ -13,7 +13,7 @@
 #
 $INCLUDE	/usr/share/freeradius/dictionary
 
-$INCLUDE	/usr/share/doc/coova-chilli/dictionary.chillispot
+$INCLUDE	/usr/share/doc/coova-chilli/dictionary.coovachilli
 #
 #	Place additional attributes or $INCLUDEs here.  They will
 #	over-ride the definitions in the pre-defined dictionaries.
