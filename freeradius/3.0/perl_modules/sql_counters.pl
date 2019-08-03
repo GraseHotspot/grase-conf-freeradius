@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 
-use lib "/etc/freeradius/perl_modules";
+use lib "/etc/freeradius/3.0/perl_modules";
 #use DatabaseConnection;
 use SQLConnector;
 use SQLCounter;
@@ -34,7 +34,7 @@ sub CLONE {
     $sql_counter    = SQLCounter->new($db);
     $sql_counter->create_sql_counter_hash();
     $expirecheck = SQLExpire->new($db);
-} 
+}
 
 
 # This the remapping of return values
@@ -59,17 +59,17 @@ sub authorize {
         # Here's where your authorization code comes
         # You can call another function from here:
         #&test_call;
-        
+
         my $user = $RAD_REQUEST{'User-Name'};
-        
+
         my $attributes = Attributes->new($db);
 
-        my $check_hash = $attributes->check_attributes($user);        
+        my $check_hash = $attributes->check_attributes($user);
 
         foreach my $checkkey (keys %RAD_CHECK){
             $check_hash->{$checkkey} = $RAD_CHECK{$checkkey};
         }
-        
+
         my $sql_counter_reply = $sql_counter->counter_check($user,$check_hash);
 
         #print "======SQL Counter Reply=======\n";
@@ -82,7 +82,7 @@ sub authorize {
 
                         $RAD_REPLY{$key} = $sql_counter_reply->{$key};
                         #If there was an error the 'Reply-Message' will have a value, if so return with a 0
-                        if($key eq 'Reply-Message'){ 
+                        if($key eq 'Reply-Message'){
                                 return RLM_MODULE_REJECT;
                         }
                 }
@@ -92,7 +92,7 @@ sub authorize {
         foreach my $replykey (keys %RAD_REPLY){
             $reply_hash->{$replykey} = $RAD_REPLY{$replykey};
         }
-        
+
         my $expire_reply = $expirecheck->expire_check($user,$check_hash,$reply_hash);
 
         if(defined $expire_reply){
@@ -101,11 +101,11 @@ sub authorize {
 
                         $RAD_REPLY{$key} = $expire_reply->{$key};
                         #If there was an error the 'Reply-Message' will have a value, if so return with a 0
-                        if($key eq 'Reply-Message'){ 
+                        if($key eq 'Reply-Message'){
                                 return RLM_MODULE_REJECT;
                         }
                 }
-        }         
+        }
         # TODO Only send UPDATED if we have actually changed things
         return RLM_MODULE_UPDATED;
 }

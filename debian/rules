@@ -5,10 +5,8 @@ DEB_AUTO_UPDATE_DEBIAN_CONTROL = 1
 DEB_DIVERT_EXTENSION = .grase
 # Replace some base files with simple replacements.
 DEB_DIVERT_FILES_grase-conf-freeradius += \
-	/etc/freeradius/sql.conf.grase \
-	/etc/freeradius/sites-available/default.grase \
-	/etc/freeradius/dictionary.grase \
-	/etc/freeradius/sql/mysql/counter.conf.grase \
+	/etc/freeradius/3.0/dictionary.grase \
+#	/etc/freeradius/sql/mysql/counter.conf.grase \
 #	/etc/freeradius/modules/perl.grase
 #	/etc/mailname.debathena \
 #	/etc/papersize.debathena
@@ -22,4 +20,3 @@ DEB_DIVERT_FILES_grase-conf-freeradius += \
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/rules/config-package.mk
-

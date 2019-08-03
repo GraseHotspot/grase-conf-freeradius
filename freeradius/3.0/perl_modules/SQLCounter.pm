@@ -20,7 +20,7 @@ This documentation refers to SQLCounter version 0.1
 
             $RAD_REPLY{$key} = $sql_counter_reply->{$key};
             #If there was an error the 'Reply-Message' will have a value, if so return with a 0
-            if($key eq 'Reply-Message'){ 
+            if($key eq 'Reply-Message'){
                 return 0;
             }
         }
@@ -41,7 +41,7 @@ This hash of attribute / value pairs are returned which should be used to $RAD_R
 
 Copyright (c) 2006 Dirk van der Walt (dirkvanderwalt at gmail dot com). All rights reserved.
 
-This module is free software; you can redistribute it and/or 
+This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
 
 This program is distributed in the hope that it will be usefull,
@@ -62,7 +62,7 @@ use POSIX;
 #===============================================================
 #===== CONFIGURATION DATA ======================================
 #===============================================================
-my $config_file = '/etc/freeradius/perl_modules/conf/settings.conf';
+my $config_file = '/etc/freeradius/3.0/perl_modules/conf/settings.conf';
 #===============================================================
 #===== END of Configuration Data ===============================
 #===============================================================
@@ -108,13 +108,13 @@ sub counter_check {
                 #Determine the check attribute
                 my $check_name = $counters_detail->{$key}{'check-name'};
                 my $reply_name = $counters_detail->{$key}{'reply-name'};
-                
+
                 # Our reject reply-message when the counter is finished
                 my $reply_message = $counters_detail->{$key}{'reply-message'};
-                
+
                 my $giga_reply_name = $counters_detail->{$key}{'giga-reply-name'};
                 if(!defined $giga_reply_name){ ($giga_reply_name = $reply_name) =~ s/Octets/Gigawords/;}
-                
+
                 #Have we got a key like this? (in the $check_hash for the user)
                 if(exists $check_hash->{$check_name}){
 
@@ -128,7 +128,7 @@ sub counter_check {
                     $sql_query      =~ s/%b/$timestamp/g;
                     $sql_query      =~ s/"//g;
                     #  print "HEADS UP $sql_query\n";
-                    #--- NOTE: This may be a performance bottleneck! because the 'prepare' happens every time --- 
+                    #--- NOTE: This may be a performance bottleneck! because the 'prepare' happens every time ---
                     #--- IF performance is a problem --- start here!---------------------------------------------
                     #--------------------------------------------------------------------------------------------
                     my $return_data = $self->{'sql_connector'}->query($sql_query);
@@ -260,7 +260,7 @@ sub create_sql_counter_hash {
     my @sql_counter_raw = `cat $sql_counter_file`;
     foreach my $line (@sql_counter_raw){
         chomp $line;
-        
+
         #BEGIN THE RECORDING
         if($line =~ m/^\s*sqlcounter/){
             $counter_record = 1;
@@ -282,14 +282,14 @@ sub create_sql_counter_hash {
         if(($counter_record)&&($line =~ m/\s*reply-name/)){
             $sql_counter_hash->{$counter_name}{'reply-name'} = $self->get_sql_counter_atom($line);
         }
-        
+
         if(($counter_record)&&($line =~ m/\s*reply-message/)){
             $line =~ s/\s*reply-message\s*=\s*//;
             $line =~ s/^"//;
             $line =~ s/"$//;
             $sql_counter_hash->{$counter_name}{'reply-message'} = $line;
-        }        
-        
+        }
+
         if(($counter_record)&&($line =~ m/\s*gigareplyname/)){
             $sql_counter_hash->{$counter_name}{'giga-reply-name'} = $self->get_sql_counter_atom($line);
         }
@@ -330,7 +330,7 @@ sub get_sql_counter_atom {
 
 
 sub find_if_sqlcounter_is_active {
-    
+
     my ($self,$sql_counter_name) = @_;
     my @auth_section_ent    = $self->get_active_counters_from_settings();
 
@@ -370,10 +370,10 @@ sub get_timestamp {
      if($reset eq "daily"){
         return start_of_day();
     }
-    
+
      if($reset eq "hourly"){
         return start_of_hour();
-    }    
+    }
     return mktime (0, 0, 0, 1, 1, (2004 - 1900), 0, 0);
 }
 
