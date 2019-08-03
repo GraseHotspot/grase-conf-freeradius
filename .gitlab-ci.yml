@@ -1,6 +1,5 @@
-jessie-all:
+.build_template: &build_definition
   stage: build
-  image: grase/build-images:jessie
   script:
     - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
     - dpkg-buildpackage
@@ -10,29 +9,20 @@ jessie-all:
     paths:
       - artifacts/
     expire_in: 1 week
+
+
+jessie-all:
+  <<: *build_definition
+  image: grase/build-images:jessie
 
 trusty-all:
-  stage: build
+  <<: *build_definition
   image: grase/build-images:trusty
-  script:
-    - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
-    - dpkg-buildpackage
-    - mkdir artifacts
-    - mv -v ../grase-conf-freeradius_* artifacts/
-  artifacts:
-    paths:
-      - artifacts/
-    expire_in: 1 week
 
 xenial-all:
-  stage: build
+  <<: *build_definition
   image: grase/build-images:xenial
-  script:
-    - dch -v $(git describe |tr '-' '.')~$(lsb_release -cs) -b ""
-    - dpkg-buildpackage
-    - mkdir artifacts
-    - mv -v ../grase-conf-freeradius_* artifacts/
-  artifacts:
-    paths:
-      - artifacts/
-    expire_in: 1 week
+
+bionic-php56-all:
+  <<: *build_definition
+  image: grase/build-images:bionic-php56
