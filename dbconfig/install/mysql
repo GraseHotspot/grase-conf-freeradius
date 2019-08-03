@@ -23,7 +23,7 @@
 CREATE TABLE IF NOT EXISTS `mtotacct` (
   `MTotAcctId` bigint(21) NOT NULL auto_increment,
   `UserName` varchar(64) NOT NULL default '',
-  `AcctDate` date NOT NULL default '0000-00-00',
+  `AcctDate` date NOT NULL default '1970-01-01',
   `ConnNum` bigint(12) default NULL,
   `ConnTotDuration` bigint(12) default NULL,
   `ConnMaxDuration` bigint(12) default NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `mtotacct` (
 CREATE TABLE IF NOT EXISTS `mtotaccttmp` (
   `MTotAcctId` bigint(21) NOT NULL auto_increment,
   `UserName` varchar(64) NOT NULL default '',
-  `AcctDate` date NOT NULL default '0000-00-00',
+  `AcctDate` date NOT NULL default '1970-01-01',
   `ConnNum` bigint(12) default NULL,
   `ConnTotDuration` bigint(12) default NULL,
   `ConnMaxDuration` bigint(12) default NULL,
