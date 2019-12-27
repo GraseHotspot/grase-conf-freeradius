@@ -23,6 +23,6 @@ xenial-all:
   <<: *build_definition
   image: grase/build-images:xenial
 
-bionic-php56-all:
+bionic-all:
   <<: *build_definition
-  image: grase/build-images:bionic-php56
+  image: grase/build-images:bionic
