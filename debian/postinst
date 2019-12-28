@@ -43,14 +43,14 @@ chmod 640 /etc/freeradius/3.0/mods-available/grasesql
 
 
 # Fix for Debian/Ubuntu bug to do with Perl
-preloader=`grep "export LD_PRELOAD" /etc/default/freeradius || true`
-    if [ "$preloader" = "" ]
-    then
-         #libperl=$(find /usr/lib/ -name "libperl.so*"|awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }')
-         touch /etc/default/freeradius
-         echo 'export LD_PRELOAD=$(find /usr/lib/ -name "libperl.so*"|sort -n |tail -n 1)' >> /etc/default/freeradius
-         #echo "export LD_PRELOAD=$libperl" >> /etc/default/freeradius
-    fi
+# preloader=`grep "export LD_PRELOAD" /etc/default/freeradius || true`
+#     if [ "$preloader" = "" ]
+#     then
+#          #libperl=$(find /usr/lib/ -name "libperl.so*"|awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }')
+#          touch /etc/default/freeradius
+#          echo 'export LD_PRELOAD=$(find /usr/lib/ -name "libperl.so*"|sort -n |tail -n 1)' >> /etc/default/freeradius
+#          #echo "export LD_PRELOAD=$libperl" >> /etc/default/freeradius
+#     fi
 
 #DEBHELPER#
 
