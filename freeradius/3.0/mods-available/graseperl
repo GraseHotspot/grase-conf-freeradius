@@ -11,8 +11,7 @@ perl graseperl {
 	#  'rlm_exec' module, but it is persistent, and therefore
 	#  faster.
 	#
-	#module = ${confdir}/example.pl
-	module = ${confdir}/perl_modules/sql_counters.pl
+	filename = ${confdir}/perl_modules/sql_counters.pl
 
 	#
 	#  The following hashes are given to the module and

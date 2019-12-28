@@ -27,7 +27,7 @@ sub expire_check {
             my $sql_query = 'SELECT AcctStartTime FROM radacct WHERE UserName = \'%{%k}\' AND AcctSessionTime >= 1 ORDER BY AcctStartTime LIMIT 1';
 
             #Filter out the ='%{%k}' to add our own user eg username='%{%k}'
-            $sql_query      =~ s/%{%k}/$username/g;
+            $sql_query      =~ s/%\{%k}/$username/g;
 
             my $return_data = $self->{'sql_connector'}->query($sql_query);
 

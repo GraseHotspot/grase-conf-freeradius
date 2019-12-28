@@ -123,7 +123,7 @@ sub counter_check {
                     my $sql_query   = $counters_detail->{$key}{'query'};
 
                     #Filter out the ='%{%k}' to add our own user eg username='%{%k}'
-                    $sql_query      =~ s/%{%k}/$username/g;
+                    $sql_query      =~ s/%\{%k}/$username/g;
                     #Filter out the '%b' and replace it wit the correct unix timestamp
                     $sql_query      =~ s/%b/$timestamp/g;
                     $sql_query      =~ s/"//g;
@@ -232,7 +232,7 @@ sub get_usage_for_counter {
                 my $timestamp   = $self->get_timestamp($reset); #When should the reset time be
                 my $sql_query   = $counters_detail->{$key}{'query'};
                 #Filter out the ='%{%k}' to add our own user eg username='%{%k}'
-                $sql_query      =~ s/%{%k}/$username/g;
+                $sql_query      =~ s/%\{%k}/$username/g;
                 #Filter out the '%b' and replace it wit the correct unix timestamp
                 $sql_query      =~ s/%b/$timestamp/g;
                 $sql_query      =~ s/"//g;
