@@ -17,7 +17,7 @@
 #
 #
 
-sql {
+sql grasesql {
 	#
 	#  The dialect of SQL being used.
 	#
@@ -199,11 +199,11 @@ sql {
 
 	# This entry should be used for additional instances (sql foo {})
 	# of the SQL module.
-#	group_attribute = "${.:instance}-SQL-Group"
+	group_attribute = "${.:instance}-SQL-Group"
 
 	# This entry should be used for the default instance (sql {})
 	# of the SQL module.
-	group_attribute = "SQL-Group"
+	#group_attribute = "SQL-Group"
 
 	# GRASE Hotspot overrides
 	default_user_profile = "DEFAULT_GRASE"

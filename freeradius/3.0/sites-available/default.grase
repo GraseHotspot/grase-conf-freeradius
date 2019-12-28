@@ -505,9 +505,9 @@ authenticate {
 	#  PAP authentication, when a back-end database listed
 	#  in the 'authorize' section supplies a password.  The
 	#  password can be clear-text, or encrypted.
-	Auth-Type PAP {
-		pap
-	}
+	#Auth-Type PAP {
+	#	pap
+	#}
 
 	#
 	#  Most people want CHAP authentication
@@ -556,7 +556,7 @@ authenticate {
 
 	#
 	#  Allow EAP authentication.
-	eap
+	#eap
 
 	#
 	#  The older configurations sent a number of attributes in
