@@ -34,7 +34,7 @@ sql {
 	#
 	#  Which FreeRADIUS driver to use.
 	#
-	driver = "rlm_sql_${database}"
+	driver = "rlm_sql_${dialect}"
 
 	mysql {
 		# If yes, (or auto and libmysqlclient reports warnings are
