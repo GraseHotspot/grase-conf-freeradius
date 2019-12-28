@@ -8,6 +8,6 @@ Homepage: <insert the upstream URL, if relevant>
 
 Package: grase-conf-freeradius
 Architecture: all
-Depends: ${misc:Depends}, libconfig-simple-perl, libxml-simple-perl
+Depends: ${misc:Depends}, libconfig-simple-perl, libxml-simple-perl, libdbd-mysql-perl
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
