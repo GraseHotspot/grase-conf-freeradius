@@ -23,6 +23,7 @@ dbc_go grase-conf-freeradius $@
 ## Generate second config file
 dbconfig-generate-include -a -f template -O root:freerad -m 640 -o template_infile=/usr/share/grase/templates/sql.conf.grase /etc/dbconfig-common/grase-conf-freeradius.conf /etc/freeradius/3.0/mods-available/grasesql
 ln -s /etc/freeradius/3.0/mods-available/grasesql /etc/freeradius/3.0/mods-enabled/grasesql
+ln -s /etc/freeradius/3.0/mods-available/graseperl /etc/freeradius/3.0/mods-enabled/graseperl
 
 # Disable default and enable ours
 rm -f /etc/freeradius/3.0/sites-enabled/default
