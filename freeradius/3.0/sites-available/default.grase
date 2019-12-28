@@ -409,7 +409,7 @@ authorize {
 	#  is meant to mirror the "users" file.
 	#
 	#  See "Authorization Queries" in mods-available/sql
-	-grasesql
+	grasesql
 
 	#
 	#  If you are using /etc/smbpasswd, and are also doing
@@ -419,7 +419,7 @@ authorize {
 
 	#
 	#  The ldap module reads passwords from the LDAP database.
-	-ldap
+	#-ldap
 
 	#
 	#  Enforce daily limits on time spent logged in.
@@ -664,7 +664,7 @@ accounting {
 	#  Log traffic to an SQL database.
 	#
 	#  See "Accounting queries" in mods-available/sql
-	-grasesql
+	grasesql
 
 	#
 	#  If you receive stop packets with zero session length,
@@ -773,7 +773,7 @@ post-auth {
 	#  After authenticating the user, do another SQL query.
 	#
 	#  See "Authentication Logging Queries" in mods-available/sql
-	-grasesql
+	grasesql
 
 	#
 	#  Un-comment the following if you want to modify the user's object
@@ -872,7 +872,7 @@ post-auth {
 	#
 	Post-Auth-Type REJECT {
 		# log failed authentications in SQL, too.
-		-grasesql
+		grasesql
     if ( "%{reply:Reply-Message}" == "\r\nYou are already logged in - access denied\r\n\n" ) {
         update reply {
             Reply-Message := "You are already logged in at another location.<br/>Please try again in 5 minutes"
