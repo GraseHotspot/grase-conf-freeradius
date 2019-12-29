@@ -208,19 +208,22 @@ sql grasesql {
 	# GRASE Hotspot overrides
 	default_user_profile = "DEFAULT_GRASE"
 
-	## Read GRASE postauth before loading dialup.conf as first loaded overrides
-    postauth_query = "INSERT INTO ${postauth_table} \
-                          (username, pass, reply, authdate, ServiceType, FramedIPAddress, CallingStationId) \
-                          VALUES ( \
-                          '%{User-Name}', \
-                          '%{%{User-Password}:-%{Chap-Password}}', \
-                          '%{reply:Packet-Type}', '%S', \
-                          '%{Service-Type}', '%{Framed-IP-Address}', '%{Calling-Station-Id}')"
+	## Read GRASE postauth before loading queriesconf as first loaded overrides
+	post-auth {
+		# Write SQL queries to a logfile. This is potentially useful for bulk inserts
+		# when used with the rlm_sql_null driver.
+		#logfile = ${logdir}/post-auth.sql
 
-	simul_count_query = "SELECT COUNT(*) \
-                         FROM ${acct_table1} \
-                         WHERE username = '%{SQL-User-Name}' \
-                         AND acctstoptime IS NULL"
+		query = "\
+				INSERT INTO ${..postauth_table} \
+						(username, pass, reply, authdate, ServiceType, FramedIPAddress, CallingStationId) \
+				VALUES ( \
+						'%{SQL-User-Name}', \
+						'%{%{User-Password}:-%{Chap-Password}}', \
+						'%{reply:Packet-Type}', \
+						'%S', \
+						'%{Service-Type}', '%{Framed-IP-Address}', '%{Calling-Station-Id}')"
+	}
 
 	# Read database-specific queries
 	$INCLUDE ${modconfdir}/${.:name}/main/${dialect}/queries.conf
