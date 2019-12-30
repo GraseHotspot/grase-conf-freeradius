@@ -435,7 +435,7 @@ server default {
         }
         if(userlock){
             update reply {
-                Reply-Message := "Your account has expired, %{User-Name}"
+                Reply-Message := "Your account has expired"
             }
             reject
         }
@@ -884,7 +884,7 @@ server default {
             grasesql
             if ( &reply:Reply-Message == "\r\nYou are already logged in - access denied\r\n\n" ) {
                 update reply {
-                    Reply-Message := "You are already logged in at another location.<br/>Please try again in 5 minutes"
+                    Reply-Message := "You are already logged in at another location. Please try again in 5 minutes"
                 }
             }
 
