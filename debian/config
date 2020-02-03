@@ -6,11 +6,9 @@
 # we support mysql and pgsql
 dbc_first_version=1.0
 dbc_dbtypes="mysql"
-dbc_dbname="radius"
-dbc_dbuser="radius"
+dbc_dbuser="grase"
+dbc_dbname="grase"
 dbc_dbpassword=""
 # source dbconfig-common stuff
-. /usr/share/dbconfig-common/dpkg/config 
-dbc_go grase-conf-freeradius $@
-
-
+. /usr/share/dbconfig-common/dpkg/config
+dbc_go grase-db $@

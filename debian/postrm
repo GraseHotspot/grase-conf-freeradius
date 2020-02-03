@@ -5,36 +5,30 @@ set -e
 #set -u
 
 if [ -f /usr/share/debconf/confmodule ]; then
-    . /usr/share/debconf/confmodule
+  . /usr/share/debconf/confmodule
 fi
 if [ -f /usr/share/dbconfig-common/dpkg/postrm.mysql ]; then
-    . /usr/share/dbconfig-common/dpkg/postrm.mysql
-    dbc_go grase-conf-freeradius $@
+  . /usr/share/dbconfig-common/dpkg/postrm.mysql
+  dbc_go grase-db $@
 fi
 
-
 if [ "$1" = "purge" ]; then
-    rm -f /etc/freeradius/3.0/mods-available/grasesql
-    rm -f /etc/freeradius/3.0/mods-available/graseperl
-    rm -f /etc/grase/radius.conf
-    if which ucf >/dev/null 2>&1; then
-        ucf --purge /etc/freeradius/3.0/mods-available/grasesql
-	ucf --purge /etc/freeradius/3.0/mods-available/graseperl
-        ucf --purge /etc/grase/radius.conf
-        ucfr --purge grase-conf-freeradius /etc/grase/radius.conf
-        ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/grasesql
-	ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/graseperl
-    fi
+  rm -f /etc/freeradius/3.0/mods-available/grasesql
+  rm -f /etc/freeradius/3.0/mods-available/graseperl
+  if which ucf >/dev/null 2>&1; then
+    ucf --purge /etc/freeradius/3.0/mods-available/grasesql
+    ucf --purge /etc/freeradius/3.0/mods-available/graseperl
+    ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/grasesql
+    ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/graseperl
+  fi
 fi
 
 #DEBHELPER#
 
-
-
 if which invoke-rc.d >/dev/null 2>&1; then
-       invoke-rc.d freeradius stop || true
+  invoke-rc.d freeradius stop || true
 else
-       /etc/init.d/freeradius stop || true
+  /etc/init.d/freeradius stop || true
 fi
 
 exit 0
