@@ -8,7 +8,7 @@ umask 022
 # source debconf stuff
 . /usr/share/debconf/confmodule
 # source dbconfig-common stuff
-. /usr/share/dbconfig-common/dpkg/postinst.mysql
+. /usr/share/dbconfig-common/dpkg/frontend.postinst.mysql
 
 mkdir -p /etc/grase/
 
