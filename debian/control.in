@@ -8,7 +8,7 @@ Homepage: http://grasehotspot.org/
 
 Package: grase-conf-freeradius
 Architecture: all
-Pre-Depends: freeradius (>= 3.0.0), freeradius-mysql (>= 3.0.0), coova-chilli (>= 1.4.0 ), virtual-mysql-client
+Pre-Depends: freeradius (>= 3.0.0), freeradius-mysql (>= 3.0.0), coova-chilli (>= 1.4.0 ), mariadb-client | virtual-mysql-client
 Depends: dbconfig-common, dbconfig-mysql | dbconfig-no-thanks, ${misc:Depends}, libconfig-simple-perl, libxml-simple-perl, libtime-modules-perl
 Provides: ${diverted-files}
 Conflicts: ${diverted-files}
