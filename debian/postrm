@@ -18,6 +18,8 @@ if [ "$1" = "purge" ]; then
   if which ucf >/dev/null 2>&1; then
     ucf --purge /etc/freeradius/3.0/mods-available/grasesql
     ucf --purge /etc/freeradius/3.0/mods-available/graseperl
+    ucf --purge /etc/grase/radius.conf
+    ucfr --purge grase-conf-freeradius /etc/grase/radius.conf
     ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/grasesql
     ucfr --purge grase-conf-freeradius /etc/freeradius/3.0/mods-available/graseperl
   fi

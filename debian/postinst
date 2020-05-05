@@ -19,6 +19,8 @@ dbc_generate_include_owner="root:freerad"
 dbc_generate_include_args="-o template_infile=/usr/share/grase/templates/sql.conf.grase -U"
 
 dbc_go grase-db $@
+## Generate Perl config module from the preinstalled grase-db
+dbconfig-generate-include -a -f template -O root:freerad -m 640 -o template_infile=/usr/share/grase/templates/radius.conf /etc/dbconfig-common/grase-db.conf /etc/grase/radius.conf
 
 ln -fs /etc/freeradius/3.0/mods-available/grasesql /etc/freeradius/3.0/mods-enabled/grasesql
 ln -fs /etc/freeradius/3.0/mods-available/graseperl /etc/freeradius/3.0/mods-enabled/graseperl
@@ -36,6 +38,9 @@ sed -i 's/testing123/hotspotradius/m' /etc/freeradius/3.0/clients.conf
 # On the off chance the file permissions are wrong, we need to make sure its right
 chown root:freerad /etc/freeradius/3.0/mods-available/grasesql
 chmod 640 /etc/freeradius/3.0/mods-available/grasesql
+chown root:freerad /etc/grase/radius.conf
+chmod 640 /etc/grase/radius.conf
+
 
 # Fix for Debian/Ubuntu bug to do with Perl
 # preloader=`grep "export LD_PRELOAD" /etc/default/freeradius || true`
