@@ -60,4 +60,8 @@ else
   /etc/init.d/freeradius restart 3>&- || true
 fi
 
+# Ensure we enable freeradius at boot
+deb-systemd-helper enable freeradius
+update-rc.d freeradius defaults
+
 exit 0
