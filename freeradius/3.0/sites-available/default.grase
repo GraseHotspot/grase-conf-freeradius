@@ -511,9 +511,11 @@ server default {
         #  PAP authentication, when a back-end database listed
         #  in the 'authorize' section supplies a password.  The
         #  password can be clear-text, or encrypted.
-        #Auth-Type PAP {
-        #   pap
-        #}
+        #
+        # We need PAP in Grase for the CoovaChilli user to login
+        Auth-Type PAP {
+           pap
+        }
 
         #
         #  Most people want CHAP authentication
