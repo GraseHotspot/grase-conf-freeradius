@@ -61,7 +61,7 @@ else
 fi
 
 # Ensure we enable freeradius at boot
-deb-systemd-helper enable freeradius
+deb-systemd-helper enable freeradius.service
 update-rc.d freeradius defaults
 
 exit 0
